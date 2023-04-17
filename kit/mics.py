@@ -116,7 +116,7 @@ def mytransform(img4c,mode='color'):
   img has 4 chennel, (4,400,400)
   '''
   img4c = [TF.to_pil_image(-TF.to_tensor(x)) for x in img4c]
-  #for i in img4c: i=TF.to_pil_image(-TF.to_tensor(i))
+
   
   #Random rotate
   rotater = T.RandomRotation(degrees=(0, 360))
@@ -126,8 +126,6 @@ def mytransform(img4c,mode='color'):
      jitter = T.ColorJitter(brightness=[0.5,1.5], contrast=[0.5,1.5],saturation=[0.5,1.5])
      img4c = [jitter(i) for i in img4c]
 
-  # perspective_transformer = T.RandomPerspective(distortion_scale=0.2, p=0.3)
-  # img4c = [perspective_transformer(i) for i in img4c]
   #pil to tensor
   img4c = [np.squeeze(TF.pil_to_tensor(x).numpy()) for x in img4c] 
   
@@ -156,7 +154,7 @@ def get_intensity_range(img):
 
 def roibox(img,l = 400):
     if img.shape[1] < 500: return img
-    tmp = np.where(img>=np.max(img)-10)  #也可以试试看peak_local_max?
+    tmp = np.where(img>=np.max(img)-10) 
     x_var,y_var = np.var(tmp[0]),np.var(tmp[1])
     if x_var>5000 or y_var > 5000:
         img_resize = roibox(img[1000:2500,2000:4000])
@@ -186,7 +184,7 @@ def roibox(img,l = 400):
     x_mid = int(np.mean(tmp[1]))
     hl = int(l/2)
     img_resize = img[y_mid-hl: y_mid+hl, x_mid-hl: x_mid+hl]
-    #plt.imshow(img_resize,cmap='gray')
+
     return img_resize
 
 def get_ae_2d(img, material, ai, sample_no , tf=0, blur=0):
@@ -194,11 +192,9 @@ def get_ae_2d(img, material, ai, sample_no , tf=0, blur=0):
   blur =1, apply, blur=0 nothing
   ai: isotropy=0, anisotropy=1
   tf: tranform = 1 apply tranformation
-  #minrange=20,maxrange=221,step=10 means the pixel intensity
   return list ['Sample No',"Material","Band","Intensity",'Eccentricity','Ellipse angle','pca_eps','pca_angle','isotropy label','blur','transform']
   '''
-  #fig,axes =plt.subplots(4,4,figsize=(20,20))
-  light = ['band0 violet','band1 violet','band2 red','band3 red']
+
   results = []
   num = 0
 
