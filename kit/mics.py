@@ -29,7 +29,7 @@ def read_material_csv(csv_folder,merge=None,pick=None):
   print(sorted(name_list))
   print('*'*20)
   if merge ==None or pick ==None: 
-    assert print('input merge list or pick list')
+    raise ValueError('Please input merge list or pick list')
 
 
   def merge_material(merge_l1):

@@ -99,7 +99,7 @@ def clr_compare(train_xy,label, test_xy=None,names_classifiers='default',norm=Fa
         multicalss = False
         scoring_way = 'roc_auc'
     else:
-        assert print('y class does not fit')
+        raise ValueError('y class does not fit')
 
     if train_y.shape[-1] ==1: # (n,) to ravel
         train_y=np.ravel(train_y)
@@ -156,15 +156,11 @@ def clr_compare(train_xy,label, test_xy=None,names_classifiers='default',norm=Fa
         
         #predict mode
         elif type(test_x) != type(None) and type(test_y) == type(None): 
-            print('Predict mode under construction')
-            sys.exit()
-            results[name] = round(cv.mean())
-            pred_y = clf.predict(test_x)
-            pred_results[name] = pred_y
+            raise ValueError('Predict mode under construction')
+
         else:
-            print('What mode is it??')
-            sys.exit()
-            results[name] = round(cv.mean())
+            raise ValueError('Wrong mode')
+
             
     if miscls:
         miss_pd = pd.DataFrame(miss)
@@ -237,8 +233,7 @@ def train_mymodel(df, save_path,params='default',epochs = 50,extra_cmt='default'
             elif index == ['Material','Sample No','Band']:
                 column = ['Intensity_index']
             else:
-                print('Error Wrong index')
-                sys.exit()
+                raise ValueError('Error Wrong index')
 
             if desc_ilist[j] == '2Bandv':
                 train_df, test_df = [df.query('Band == 1 or Band == 2') for df in [train_m_df, test_m_df]]
