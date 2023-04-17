@@ -6,10 +6,10 @@ from tqdm.auto import tqdm
 counts = 0
 data_path = 'data/'
 results_path = 'results/'
-pic_dict = np.load(os.path.join(data_path,'pic_dict.npz'),allow_pickle=True)['pic_dict'].item()
+pic_dict = np.load(os.path.join(data_path,'materials_pic.npz'),allow_pickle=True)['materials_pic'].item()
 isolabel = json.load(open(os.path.join(data_path,'isolabel.json')))
 
-csv_folder = 'material_csv/'
+csv_folder = 'extracted_features/'
 name_list = [x.split(".")[0] for x in os.listdir(os.path.join(data_path,csv_folder))]
 
 new_material = []
